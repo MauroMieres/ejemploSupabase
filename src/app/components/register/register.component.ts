@@ -14,14 +14,14 @@ const supabase = createClient(environment.apiUrl, environment.publicAnonKey)
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
-username: string;
+email: string;
 password: string;
 name: string = '';
 age: number = 0;
 avatarFile: File | null = null;
 
 constructor(private router: Router) {
-  this.username = '';
+  this.email = '';
   this.password = '';
 }
 
@@ -29,7 +29,7 @@ constructor(private router: Router) {
 
 register() {
   supabase.auth.signUp({
-    email: this.username,
+    email: this.email,
     password: this.password,
   }).then(({ data, error }) => {
     if (error) {
@@ -71,7 +71,7 @@ const { data, error } = await supabase
   .from('images')
   .upload(`users/${this.avatarFile?.name}`, this.avatarFile!, {
     cacheControl: '3600',
-    upsert: false
+    upsert: true
   });
 
   return data;
@@ -79,6 +79,14 @@ const { data, error } = await supabase
 
 onFileSelected(event: any) {
   this.avatarFile = event.target.files[0];
+
+  if (this.avatarFile) {
+    console.log('Archivo cargado:');
+    console.log('Nombre:', this.avatarFile.name);
+    console.log('Tipo:', this.avatarFile.type);
+  } else {
+    console.warn('No se seleccionó ningún archivo.');
+  }
 }
 
 

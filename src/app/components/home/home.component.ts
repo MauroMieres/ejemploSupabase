@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import { UserData } from '../../models/user-data';
 import { environment } from '../../../environments/environment';
 
+//const supabase = createClient(environment.apiUrl, environment.publicAnonKey);
 const supabase = createClient(environment.apiUrl, environment.publicAnonKey);
 
 @Component({
